@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using CommandLine;
+using CommandLine.Text;
 
 namespace DotEnv
 {
@@ -16,5 +19,18 @@ namespace DotEnv
 
     [Option(longName: "dry-run", Default = false, HelpText = "Loads and parses the .env file, but does not apply environment variable changes.")]
     public bool DryRun { get; set; }
+
+    [Usage(ApplicationAlias = "dotenv")]
+    public static IEnumerable<Example> Examples
+    {
+      get
+      {
+        yield return new Example("Run using local .env file", new UnParserSettings(), new Options());
+        yield return new Example("Run using specific file", new UnParserSettings(), new Options { Path = ".env.local" });
+        yield return new Example("Run applying variables to Machine level", new UnParserSettings(),
+          new Options { Target = EnvironmentVariableTarget.Machine });
+        yield return new Example("Run without applying changes", new UnParserSettings(), new Options { DryRun = true });
+      }
+    }
   }
 }
