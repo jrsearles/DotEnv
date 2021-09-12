@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31624.102
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotenv", "src\DotEnv.csproj", "{2F095AFC-D807-4AA7-86A6-B64C07682EEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotEnv.CommandLine", "src\DotEnv.CommandLine\DotEnv.CommandLine.csproj", "{2F095AFC-D807-4AA7-86A6-B64C07682EEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotEnv.Tests", "src\DotEnv.Tests\DotEnv.Tests.csproj", "{F3713BF9-B657-4AC6-B519-FCDC1D68FD19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2F095AFC-D807-4AA7-86A6-B64C07682EEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F095AFC-D807-4AA7-86A6-B64C07682EEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F095AFC-D807-4AA7-86A6-B64C07682EEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3713BF9-B657-4AC6-B519-FCDC1D68FD19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3713BF9-B657-4AC6-B519-FCDC1D68FD19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3713BF9-B657-4AC6-B519-FCDC1D68FD19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3713BF9-B657-4AC6-B519-FCDC1D68FD19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
