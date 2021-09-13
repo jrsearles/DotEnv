@@ -12,7 +12,7 @@ namespace DotEnv
       }
     }
 
-    public static void LogMessage(string text)
+    public static void LogInfo(string text)
     {
       using (ConsoleLogger.SetColor(ConsoleColor.Gray))
       {
@@ -24,14 +24,14 @@ namespace DotEnv
 
     private class ColorChanger : IDisposable
     {
-      private ConsoleColor _current = Console.ForegroundColor;
+      private readonly ConsoleColor _previous = Console.ForegroundColor;
 
       public ColorChanger(ConsoleColor color)
       {
         Console.ForegroundColor = color;
       }
 
-      public void Dispose() => Console.ForegroundColor = _current;
+      public void Dispose() => Console.ForegroundColor = _previous;
     }
   }
 }

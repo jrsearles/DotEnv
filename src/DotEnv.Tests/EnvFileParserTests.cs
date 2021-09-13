@@ -17,11 +17,6 @@ namespace DotEnv.Tests
     [InlineData("DONT_EXPAND_UNQUOTED", "dontexpand\\nnewlines")]
     [InlineData("DONT_EXPAND_SQUOTED", "dontexpand\\nnewlines")]
     [InlineData("EQUAL_SIGNS", "equals==")]
-    [InlineData("RETAIN_INNER_QUOTES", "{\"foo\": \"bar\"}")]
-    [InlineData("RETAIN_LEADING_DQUOTE", "\"retained")]
-    [InlineData("RETAIN_LEADING_SQUOTE", "'retained")]
-    [InlineData("RETAIN_TRAILING_DQUOTE", "retained\"")]
-    [InlineData("RETAIN_TRAILING_SQUOTE", "retained'")]
     [InlineData("RETAIN_INNER_QUOTES_AS_STRING", "{\"foo\": \"bar\"}")]
     [InlineData("TRIM_SPACE_FROM_UNQUOTED", "some spaced out string")]
     [InlineData("USERNAME", "therealnerdybeast@example.tld")]
@@ -34,9 +29,9 @@ namespace DotEnv.Tests
     public void TryParseFile_TestCases(string key, string expected)
     {
       string envFile = Path.Combine(Directory.GetCurrentDirectory(), "test.env");
-      bool parsed = EnvFileParser.TryParse(envFile, out var values);
+      var values = Program.Read(envFile);
 
-      Assert.True(parsed);
+      Assert.Equal(20, values.Count);
       Assert.Equal(expected, values[key]);
     }
 
@@ -44,15 +39,13 @@ namespace DotEnv.Tests
     public void TryParseFile_IgnoresCommentsAndWhiteSpace()
     {
       string envFile = Path.Combine(Directory.GetCurrentDirectory(), "test.env");
-      bool parsed = EnvFileParser.TryParse(envFile, out var values);
+      var values = Program.Read(envFile);
 
-      Assert.True(parsed);
-      Assert.Equal(25, values.Count);
+      Assert.Equal(20, values.Count);
       Assert.False(values.ContainsKey("COMMENTS"));
     }
 
     [Theory]
-    [InlineData("SERVER=localhost\rPASSWORD=password\rDB=tests\r")]
     [InlineData("SERVER=localhost\nPASSWORD=password\nDB=tests\n")]
     [InlineData("SERVER=localhost\r\nPASSWORD=password\r\nDB=tests\r\n")]
 
@@ -64,9 +57,8 @@ namespace DotEnv.Tests
       {
         File.WriteAllText(envFile, content);
         
-        bool parsed = EnvFileParser.TryParse(envFile, out var values);
+        var values = Program.Read(envFile);
 
-        Assert.True(parsed);
         Assert.Equal("localhost", values["SERVER"]);
         Assert.Equal("password", values["PASSWORD"]);
         Assert.Equal("tests", values["DB"]);

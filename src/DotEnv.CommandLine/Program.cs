@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using CommandLine;
 
@@ -12,6 +13,12 @@ namespace DotEnv
         .MapResult(Program.Run, _ => 1);
     }
 
+    internal static Dictionary<string, string> Read(string path)
+    {
+      IEnumerable<KeyValuePair<string, string>> values = DotNetEnv.Env.LoadMulti(new[] { path });
+      return new Dictionary<string, string>(values);
+    }
+
     private static int Run(Options options)
     {
       string envFile = options.Path;
@@ -21,12 +28,13 @@ namespace DotEnv
         envFile = Path.GetFullPath(envFile);
       }
 
-      if (!EnvFileParser.TryParse(envFile, out var values))
+      if (!File.Exists(envFile))
       {
         ConsoleLogger.LogError($"ERROR: Unable to find file '{envFile}'");
         return 1;
       }
 
+      Dictionary<string, string> values = Program.Read(envFile);
       bool log = options.Verbose || options.DryRun;
       string prefix = options.Verbose ? "VERBOSE" : "DRY-RUN";
 
@@ -34,14 +42,14 @@ namespace DotEnv
       {
         if (log)
         {
-          ConsoleLogger.LogMessage($"{prefix}: Applying {values.Count} environment variables to current {options.Target}");
+          ConsoleLogger.LogInfo($"{prefix}: Applying {values.Count} environment variables to current {options.Target}");
         }
 
         foreach (var (key, value) in values)
         {
           if (log)
           {
-            ConsoleLogger.LogMessage($"{prefix}: {key}={value}");
+            ConsoleLogger.LogInfo($"{prefix}: {key}={value}");
           }
 
           if (!options.DryRun)
@@ -52,7 +60,7 @@ namespace DotEnv
       }
       else if (log)
       {
-        ConsoleLogger.LogMessage($"{prefix}: No environment variables found in file '{envFile}'");
+        ConsoleLogger.LogInfo($"{prefix}: No environment variables found in file '{envFile}'");
       }
 
       return 0;
