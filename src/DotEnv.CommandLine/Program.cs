@@ -23,7 +23,7 @@ namespace DotEnv
 
       if (!EnvFileParser.TryParse(envFile, out var values))
       {
-        Console.WriteLine($"ERROR: Unable to find file '{envFile}'");
+        ConsoleLogger.LogError($"ERROR: Unable to find file '{envFile}'");
         return 1;
       }
 
@@ -34,14 +34,14 @@ namespace DotEnv
       {
         if (log)
         {
-          Console.WriteLine($"{prefix}: Applying {values.Count} environment variables to current {options.Target}");
+          ConsoleLogger.LogMessage($"{prefix}: Applying {values.Count} environment variables to current {options.Target}");
         }
 
         foreach (var (key, value) in values)
         {
           if (log)
           {
-            Console.WriteLine($"{prefix}: {key}={value}");
+            ConsoleLogger.LogMessage($"{prefix}: {key}={value}");
           }
 
           if (!options.DryRun)
@@ -52,7 +52,7 @@ namespace DotEnv
       }
       else if (log)
       {
-        Console.WriteLine($"{prefix}: No environment variables found in file '{envFile}'");
+        ConsoleLogger.LogMessage($"{prefix}: No environment variables found in file '{envFile}'");
       }
 
       return 0;

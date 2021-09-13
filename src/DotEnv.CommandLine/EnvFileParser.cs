@@ -36,7 +36,7 @@ namespace DotEnv
           continue;
         }
 
-        string key = new string(span.Slice(0, equalsIndex).TrimEnd());
+        string key = new(span.Slice(0, equalsIndex).TrimEnd());
         string value = EnvFileParser.ReadValue(span.Slice(equalsIndex + 1));
 
         values[key] = value;

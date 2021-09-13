@@ -19,6 +19,6 @@ namespace DotEnv
       return nextIndex + startIndex;
     }
 
-    public static string AsValue(this ReadOnlySpan<char> input) => new string(input.TrimEnd());
+    public static string AsValue(this ReadOnlySpan<char> input) => new(input.TrimEnd());
   }
 }
