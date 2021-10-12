@@ -2,11 +2,9 @@ name: CI Build
 
 on:
   push:
-    branches:
-      - "main"
+    branches: [ main ]
   pull_request:
-    branches:
-      - "main"
+    branches: [ main ]
 
 jobs:
   build:
@@ -24,4 +22,4 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --no-restore
+        run: dotnet test --no-build --verbosity normal
