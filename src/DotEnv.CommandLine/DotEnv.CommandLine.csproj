@@ -4,7 +4,7 @@
     <RootNamespace>DotEnv</RootNamespace>
     <PackageId>dotenv-tool</PackageId>    
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFramework>net5.0</TargetFramework>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotenv</ToolCommandName>
     <Version>1.0.1</Version>
